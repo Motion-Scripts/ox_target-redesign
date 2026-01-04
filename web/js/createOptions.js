@@ -1,3 +1,6 @@
+// MADE BY MOTION SCRIPTS
+
+
 import { fetchNui } from "./fetchNui.js";
 
 const optionsWrapper = document.getElementById("options-wrapper");
