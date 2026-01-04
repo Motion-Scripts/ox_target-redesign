@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --color-default: #a0c6cf;      /* soft teal-gray for text */
+  --color-hover: #d7f6ff;        /* light aqua hover */
+  --color-interact: #0342ff;     /* main cyan accent */
+}
+
+body {
+  visibility: hidden;
+  user-select: none;
+  white-space: nowrap;
+  margin: 0;
+  overflow: hidden;
+}
+
+p {
+  margin: 0;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 40;
+}
+
+#eye {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#interaction-circle {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  transition: all 0.15s ease;
+}
+
+.eye-hover #interaction-circle {
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-interact);
+  box-shadow: 0 0 10px var(--color-interact);
+  animation: pulse 0.6s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(3, 66, 255, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(3, 66, 255, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(3, 66, 255, 0);
+  }
+}
+
+#options-wrapper {
+  position: absolute;
+  top: calc(50%);
+  left: calc(50% + 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  border: none;
+  outline: none;
+  backdrop-filter: none;
+}
+
+.option-container {
+  color: var(--color-default);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  background: rgba(20, 30, 40, 0.85);
+  font-size: 9pt;
+  padding: 6px 6px;
+  margin: 0;
+  transition: all 0.2s ease;
+  width: fit-content;
+  min-width: 150px;
+  max-width: 250px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(3, 66, 255, 0.15), 0 0 0 1px rgba(3, 66, 255, 0.1);
+  position: relative;
+  overflow: visible;
+  border: none;
+  outline: none;
+}
+
+.option-container:hover {
+  background: rgba(15, 25, 35, 0.95);
+  transform: translateX(6px) scale(1.02);
+  color: var(--color-hover);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(3, 66, 255, 0.3);
+}
+
+.option-keybind {
+  position: relative;
+  font-size: 8pt;
+  font-weight: 600;
+  color: #e0fbff;
+  background: rgba(20, 30, 40, 0.8);
+  border: 1px solid rgba(160, 200, 210, 0.2);
+  border-radius: 8px;
+  padding: 3px 4px;
+  margin-right: 8px;
+  min-width: 16px;
+  height: 16px;
+  text-align: center;
+  transition: all 0.2s ease;
+  font-family: "Nunito", monospace;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.option-container:hover .option-keybind {
+  color: var(--color-interact);
+  background: rgba(3, 66, 255, 0.15);
+  border-color: rgba(3, 66, 255, 0.4);
+  transform: scale(1.05);
+}
+
+.option-icon {
+  position: relative;
+  font-size: 10pt;
+  margin-right: 8px;
+  color: var(--color-interact);
+  transition: all 0.2s ease;
+}
+
+.option-container:hover .option-icon {
+  transform: scale(1.1);
+  color: var(--color-hover);
+}
+
+.option-label {
+  position: relative;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  flex-grow: 1;
+}
+
+.option-container:hover .option-label {
+  transform: translateX(2px);
+}
+
+/* Gradient and highlight tweaks */
+.option-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(3, 66, 255, 0.08) 0%, rgba(3, 66, 255, 0.03) 100%);
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.option-container:hover::before {
+  opacity: 1;
+}
+
+/* Entry animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.option-container {
+  animation: slideIn 0.3s ease-out;
+}
+
+.option-container {
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.option-label {
+  font-size: 9pt;
+  font-weight: 500;
+}
