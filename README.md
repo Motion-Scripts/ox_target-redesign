@@ -23,6 +23,12 @@ Designed to feel **snappy, intuitive, and lightweight**, this redesign keeps the
 
 ---
 
+## 💬 Support & Community
+Join the Discord for updates, support, and previews:  
+👉 **https://discord.gg/WRR8q8XYfT**
+
+---
+
 ## 🚀 Notes
 - Zero configuration required  
 - Lightweight and performance-friendly  
