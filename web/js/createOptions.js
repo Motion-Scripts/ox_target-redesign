@@ -1,5 +1,4 @@
-// MADE BY MOTION SCRIPTS
-
+// MADE BY MOTION SCRIPTS - https://discord.gg/WRR8q8XYfT
 
 import { fetchNui } from "./fetchNui.js";
 
