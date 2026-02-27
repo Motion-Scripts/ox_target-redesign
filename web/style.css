@@ -1,9 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 :root {
-  --color-default: #a0c6cf;      /* soft teal-gray for text */
-  --color-hover: #d7f6ff;        /* light aqua hover */
-  --color-interact: #0342ff;     /* main cyan accent */
+  /* ── Accent (swap this one var to recolour everything) ── */
+  --accent:         #3b82f6;
+  --accent-rgb:     59, 130, 246;
+  --accent-dim:     rgba(59, 130, 246, 0.12);
+  --accent-border:  rgba(59, 130, 246, 0.25);
+
+  /* ── Text ── */
+  --text-primary:   rgba(255, 255, 255, 0.92);
+  --text-label:     rgba(255, 255, 255, 0.60);
+  --text-muted:     rgba(255, 255, 255, 0.30);
+
+  /* ── Glass card ── */
+  --glass-bg:       rgba(8, 8, 11, 0.78);
+  --glass-bg-h:     rgba(12, 12, 17, 0.93);
+  --glass-border:   rgba(255, 255, 255, 0.06);
+  --glass-border-h: rgba(255, 255, 255, 0.11);
+
+  /* ── Shadows ── */
+  --shadow:
+    0 2px 8px  rgba(0, 0, 0, 0.40),
+    0 8px 28px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-h:
+    0 4px 16px  rgba(0, 0, 0, 0.55),
+    0 12px 40px rgba(0, 0, 0, 0.50),
+    0 0 28px    rgba(var(--accent-rgb), 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  --radius: 10px;
 }
 
 body {
@@ -12,15 +45,15 @@ body {
   white-space: nowrap;
   margin: 0;
   overflow: hidden;
+  font-family: 'Geist', 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: transparent;
 }
 
-p {
-  margin: 0;
-}
+p { margin: 0; }
 
-.material-symbols-outlined {
-  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 40;
-}
+/* ─── Crosshair dot ───────────────────────────────────────────────── */
 
 #eye {
   position: absolute;
@@ -30,172 +63,212 @@ p {
 }
 
 #interaction-circle {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
-  background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  transition: all 0.15s ease;
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .eye-hover #interaction-circle {
-  width: 10px;
-  height: 10px;
-  background-color: var(--color-interact);
-  box-shadow: 0 0 10px var(--color-interact);
-  animation: pulse 0.6s infinite;
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  animation: dot-pulse 0.9s ease-out infinite;
 }
 
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(3, 66, 255, 0.8);
-  }
-  50% {
-    box-shadow: 0 0 0 4px rgba(3, 66, 255, 0.2);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(3, 66, 255, 0);
-  }
+@keyframes dot-pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(var(--accent-rgb), 0.55); }
+  65%  { box-shadow: 0 0 0 7px rgba(var(--accent-rgb), 0); }
+  100% { box-shadow: 0 0 0 0   rgba(var(--accent-rgb), 0); }
 }
+
+/* ─── Options wrapper ─────────────────────────────────────────────── */
 
 #options-wrapper {
   position: absolute;
-  top: calc(50%);
-  left: calc(50% + 20px);
+  top: 50%;
+  left: calc(50% + 16px);
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  background: transparent;
-  padding: 0;
-  margin: 0;
-  box-shadow: none;
-  border: none;
-  outline: none;
-  backdrop-filter: none;
+  gap: 5px;
+  pointer-events: none;
 }
+
+/* ─── Option card ─────────────────────────────────────────────────── */
 
 .option-container {
-  color: var(--color-default);
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
   align-items: center;
-  font-family: 'Poppins', sans-serif;
-  background: rgba(20, 30, 40, 0.85);
-  font-size: 9pt;
-  padding: 6px 6px;
-  margin: 0;
-  transition: all 0.2s ease;
+  padding: 8px 13px 8px 9px;
+  min-width: 168px;
+  max-width: 270px;
   width: fit-content;
-  min-width: 150px;
-  max-width: 250px;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(3, 66, 255, 0.15), 0 0 0 1px rgba(3, 66, 255, 0.1);
+
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+
+  color: var(--text-label);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+
+  cursor: pointer;
+  pointer-events: auto;
   position: relative;
-  overflow: visible;
-  border: none;
-  outline: none;
+  overflow: hidden;
+
+  transition:
+    background    0.22s ease,
+    border-color  0.22s ease,
+    box-shadow    0.22s ease,
+    color         0.15s ease,
+    transform     0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  animation: card-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.option-container:hover {
-  background: rgba(15, 25, 35, 0.95);
-  transform: translateX(6px) scale(1.02);
-  color: var(--color-hover);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(3, 66, 255, 0.3);
+/* Staggered entry */
+.option-container:nth-child(1)  { animation-delay:   0ms; }
+.option-container:nth-child(2)  { animation-delay:  40ms; }
+.option-container:nth-child(3)  { animation-delay:  80ms; }
+.option-container:nth-child(4)  { animation-delay: 120ms; }
+.option-container:nth-child(5)  { animation-delay: 160ms; }
+.option-container:nth-child(6)  { animation-delay: 200ms; }
+.option-container:nth-child(7)  { animation-delay: 240ms; }
+.option-container:nth-child(8)  { animation-delay: 280ms; }
+.option-container:nth-child(9)  { animation-delay: 320ms; }
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateX(-12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
 }
 
-.option-keybind {
-  position: relative;
-  font-size: 8pt;
-  font-weight: 600;
-  color: #e0fbff;
-  background: rgba(20, 30, 40, 0.8);
-  border: 1px solid rgba(160, 200, 210, 0.2);
-  border-radius: 8px;
-  padding: 3px 4px;
-  margin-right: 8px;
-  min-width: 16px;
-  height: 16px;
-  text-align: center;
-  transition: all 0.2s ease;
-  font-family: "Nunito", monospace;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
+/* Accent shimmer on hover (sweeps left→right) */
+.option-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  background: linear-gradient(
+    110deg,
+    rgba(var(--accent-rgb), 0.06) 0%,
+    rgba(var(--accent-rgb), 0.02) 45%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.22s ease;
+  pointer-events: none;
 }
 
-.option-container:hover .option-keybind {
-  color: var(--color-interact);
-  background: rgba(3, 66, 255, 0.15);
-  border-color: rgba(3, 66, 255, 0.4);
-  transform: scale(1.05);
-}
+.option-container:hover::after { opacity: 1; }
 
-.option-icon {
-  position: relative;
-  font-size: 10pt;
-  margin-right: 8px;
-  color: var(--color-interact);
-  transition: all 0.2s ease;
-}
-
-.option-container:hover .option-icon {
-  transform: scale(1.1);
-  color: var(--color-hover);
-}
-
-.option-label {
-  position: relative;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  flex-grow: 1;
-}
-
-.option-container:hover .option-label {
-  transform: translateX(2px);
-}
-
-/* Gradient and highlight tweaks */
+/* Left accent pip */
 .option-container::before {
   content: '';
   position: absolute;
-  top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(3, 66, 255, 0.08) 0%, rgba(3, 66, 255, 0.03) 100%);
-  border-radius: 12px;
+  top: 18%;
+  bottom: 18%;
+  width: 2px;
+  border-radius: 0 2px 2px 0;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--accent-rgb), 0.3) 0%,
+    var(--accent) 50%,
+    rgba(var(--accent-rgb), 0.3) 100%
+  );
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transform: scaleY(0.3);
+  transition:
+    opacity   0.2s ease,
+    transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .option-container:hover::before {
   opacity: 1;
+  transform: scaleY(1);
 }
 
-/* Entry animation */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.option-container:hover {
+  background: var(--glass-bg-h);
+  border-color: var(--glass-border-h);
+  box-shadow: var(--shadow-h);
+  color: var(--text-primary);
+  transform: translateX(7px);
 }
 
-.option-container {
-  animation: slideIn 0.3s ease-out;
+.option-container:active {
+  transform: translateX(5px) scale(0.99);
+  transition-duration: 0.08s;
 }
 
-.option-container {
-  letter-spacing: 0.02em;
-  line-height: 1.4;
+/* ─── Keybind badge ───────────────────────────────────────────────── */
+
+.option-keybind {
+  font-family: 'Geist Mono', 'SF Mono', 'Fira Code', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 5px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3.5px;
+  margin-right: 8px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s ease;
 }
+
+.option-container:hover .option-keybind {
+  color: var(--accent);
+  background: var(--accent-dim);
+  border-color: var(--accent-border);
+}
+
+/* ─── Icon ────────────────────────────────────────────────────────── */
+
+.option-icon {
+  font-size: 11px;
+  width: 14px;
+  text-align: center;
+  margin-right: 9px;
+  color: rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+  transition:
+    color     0.18s ease,
+    transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.option-container:hover .option-icon {
+  color: var(--accent);
+  transform: scale(1.15);
+}
+
+/* ─── Label ───────────────────────────────────────────────────────── */
 
 .option-label {
-  font-size: 9pt;
+  font-size: 12px;
   font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  color: inherit;
+  flex: 1;
+  transition: color 0.15s ease;
 }
