@@ -39,6 +39,9 @@ local function selectTargetOption(keyNumber)
     -- Only work when Alt is pressed (like ox_inventory hotkeys)
     if not IsDisabledControlPressed(0, 19) then return end -- Alt key (LMENU)
     
+    -- Disable inventory hotkeys while selecting
+    LocalPlayer.state.invHotkeys = false
+
     -- Find the corresponding option
     local optionIndex = 1
     local targetOption = nil
@@ -147,7 +150,13 @@ local function selectTargetOption(keyNumber)
             if not (option and option.openMenu) then
                 state.setActive(false)
             end
+
+            -- Re-enable inventory hotkeys after option is executed
+            LocalPlayer.state.invHotkeys = true
         end)
+    else
+        -- No option found, re-enable immediately
+        LocalPlayer.state.invHotkeys = true
     end
 end
 
